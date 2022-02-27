@@ -1,5 +1,5 @@
 {
-  "name": "template.ts",
+  "name": "watch",
   "version": "1.0.0",
   "description": "",
   "type": "module",
@@ -14,14 +14,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/luoxiu/template.ts.git"
+    "url": "git+https://github.com/luoxiu/watch.git"
   },
   "author": "luoxiu",
   "license": "UNLICENSED",
   "bugs": {
-    "url": "https://github.com/luoxiu/template.ts/issues"
+    "url": "https://github.com/luoxiu/watch/issues"
   },
-  "homepage": "https://github.com/luoxiu/template.ts#readme",
+  "homepage": "https://github.com/luoxiu/watch#readme",
   "devDependencies": {
     "@tsconfig/node16": "^1.0.2",
     "@types/jest": "^27.4.1",
@@ -35,5 +35,11 @@
     "ts-jest": "^27.1.3",
     "ts-node": "^10.5.0",
     "typescript": "^4.5.5"
+  },
+  "dependencies": {
+    "chalk": "^5.0.0",
+    "chokidar": "^3.5.3",
+    "commander": "^9.0.0",
+    "pkg-up": "^4.0.0"
   }
 }

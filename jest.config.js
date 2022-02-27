@@ -5,5 +5,5 @@ export default {
     "ts-jest": {
       useESM: true
     }
-  },
+  }
 };
