@@ -1,9 +1,12 @@
 export default {
-  // https://kulshekhar.github.io/ts-jest/docs/getting-started/presets
-  preset: "ts-jest/presets/default-esm",
+  // https://kulshekhar.github.io/ts-jest/docs/next/guides/esm-support/#use-esm-presets
+  preset: "ts-jest/presets/js-with-babel-esm",
   globals: {
     "ts-jest": {
-      useESM: true
-    }
-  }
+      useESM: true,
+    },
+  },
+  moduleNameMapper: {
+    "^(\\.{1,2}/.*)\\.js$": "$1",
+  },
 };

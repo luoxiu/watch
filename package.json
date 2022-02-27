@@ -4,12 +4,12 @@
   "description": "",
   "type": "module",
   "scripts": {
-    "dev": "nodemon src/index.ts",
-    "dev/tn": "pnpm run node/esm -- src/index.ts",
-    "test": "jest",
+    "dev": "nodemon src/watch.ts",
+    "ts-node": "node --experimental-specifier-resolution=node --loader ts-node/esm",
+    "dev/tn": "pnpm run ts-node src/watch.ts",
     "lint": "eslint '**/*.{js,ts}'",
     "lint/fix": "pnpm run lint -- --fix",
-    "node/esm": "node --experimental-specifier-resolution=node --loader ts-node/esm",
+    "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js",
     "build": "del dist && tsc"
   },
   "repository": {
