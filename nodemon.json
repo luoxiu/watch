@@ -1,0 +1,9 @@
+{
+  "ignore": [
+    ".git"
+  ],
+  "execMap": {
+    "ts": "node --experimental-specifier-resolution=node --loader ts-node/esm"
+  },
+  "ext": "ts,js,json"
+}
