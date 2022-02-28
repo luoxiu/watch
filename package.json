@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "",
   "type": "module",
+  "bin": {
+    "watch": "dist/watch.js"
+  },
   "scripts": {
     "dev": "nodemon src/watch.ts",
     "ts-node": "node --experimental-specifier-resolution=node --loader ts-node/esm",
