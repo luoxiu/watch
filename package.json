@@ -8,13 +8,13 @@
   },
   "scripts": {
     "dev": "nodemon src/watch.ts",
-    "ts-node": "node --experimental-specifier-resolution=node --loader ts-node/esm",
     "dev/tn": "pnpm run ts-node src/watch.ts",
     "lint": "eslint '**/*.{js,ts}'",
     "lint/fix": "pnpm run lint -- --fix",
     "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js",
     "build": "del dist && tsc",
-    "release": "pnpm publish --access public"
+    "pub": "pnpm run build && pnpm publish --access public",
+    "ts-node": "node --experimental-specifier-resolution=node --loader ts-node/esm"
   },
   "repository": {
     "type": "git",
