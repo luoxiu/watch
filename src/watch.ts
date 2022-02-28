@@ -1,20 +1,17 @@
 #!/usr/bin/env node
 
 import chokidar, { FSWatcher } from "chokidar";
-import path from "path";
-import fs from "fs";
+import * as path from "node:path";
+import * as fs from "node:fs";
 import chalk from "chalk";
-import { Command } from "commander";
-import { readPKG, mute } from "./util.js";
 
-const program = new Command();
-
-Object.assign(global, { chalk });
+import { mute, log } from "./util.js";
+import is from "@sindresorhus/is";
 
 const configName = ".watchrc.js";
 const configPath = path.join(process.cwd(), configName);
 
-type Config = {
+export type Config = {
   watchers: {
     paths: string | string[];
     options: chokidar.WatchOptions;
@@ -26,17 +23,28 @@ type Config = {
   }[]
 }
 
-async function getConfig(): Promise<Config> {
-  if (!fs.existsSync(configPath)) {
-    throw `config not found: "./${configName}"`;
+export async function getConfig(path: string = configPath): Promise<Config> {
+  if (!fs.existsSync(path)) {
+    throw "config: not found";
   }
 
-  const module = await import(configPath);
+  const module = await import(path);
 
-  return module.default as Config;
+  const config = module.default;
+
+  if (is.asyncFunction(config)) 
+    return await config() as Config;
+
+  if (is.function_(config))
+    return config() as Config;
+  
+  if (is.object(config))
+    return config as Config;
+
+  throw "config: bad format";
 }
 
-async function watchUseConfig(): Promise<FSWatcher[]> { 
+export async function watch(): Promise<FSWatcher[]> { 
   const config = await getConfig();
 
   const { watchers } = config;
@@ -46,44 +54,32 @@ async function watchUseConfig(): Promise<FSWatcher[]> {
 
     for (const { event, callback } of handlers) {
       watcher.on(event, callback);
+      log("start watching", chalk.blue(paths), "on", chalk.blue(event));
     }
 
     return watcher;
   });
 }
 
-async function watch() {
-  let watchers = await watchUseConfig();
+export async function watchAndRewatchOnConfigChange() {
+  let watchers = await watch();
 
   const rewatch = async () => {
     const close = mute((w: FSWatcher) => w.close());
     await Promise.all(watchers.map(close));
 
-    watchers = await watchUseConfig();
+    watchers = await watch();
   };
 
   // 'add'|'addDir'|'change'
   chokidar.watch(configPath)
     .on("change", () => {
       
-      console.log(chalk.green("config changed, re-watching..."));
+      log("config changed, rewatching...");
 
       rewatch()
         .then(() => {
-          console.log(chalk.green("re-watching done"));
+          log("done");
         });
     });
 }
-
-const pkg = await readPKG();
-
-program
-  .option(pkg.version, "-v, --version")
-  .action(async () => {
-    await watch();
-  })
-  .parseAsync(process.argv)
-  .catch(err => {
-    console.error(chalk.red(err));
-    process.exit(1);
-  });
