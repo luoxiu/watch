@@ -1,6 +1,6 @@
 {
-  "name": "watch",
-  "version": "1.0.0",
+  "name": "@luoxiu/watch",
+  "version": "0.0.1",
   "description": "",
   "type": "module",
   "bin": {
@@ -13,7 +13,8 @@
     "lint": "eslint '**/*.{js,ts}'",
     "lint/fix": "pnpm run lint -- --fix",
     "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js",
-    "build": "del dist && tsc"
+    "build": "del dist && tsc",
+    "release": "pnpm publish --access public"
   },
   "repository": {
     "type": "git",
