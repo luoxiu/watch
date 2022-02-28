@@ -9,7 +9,7 @@ const config = {
         {
           event: ["change"],
           callback: async (...args) => {
-            console.log("change", ...args);
+            console.log(chalk.blue("change"), ...args);
           } 
         },
       ]
