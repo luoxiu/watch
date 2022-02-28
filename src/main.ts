@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 import { Command } from "commander";
 import { readPKG } from "./util.js";
 import { watchAndRewatchOnConfigChange } from "./watch.js";
