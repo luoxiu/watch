@@ -15,10 +15,10 @@ export type Config = {
   watchers: {
     paths: string | string[];
     options: chokidar.WatchOptions;
-    handlers: {
-      event: string;
+    callbacks: {
+      event: string | string[];
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      callback: (...args: any[]) => void
+      callback: (...args: any[]) => void | Promise<void>;
     }[];
   }[]
 }
@@ -49,11 +49,14 @@ export async function watch(): Promise<FSWatcher[]> {
 
   const { watchers } = config;
 
-  return watchers.map(({ paths, options, handlers }) => {
+  return watchers.map(({ paths, options, callbacks }) => {
     const watcher = chokidar.watch(paths, options);
 
-    for (const { event, callback } of handlers) {
-      watcher.on(event, callback);
+    for (const { event, callback } of callbacks) {
+      const events = is.array(event) ? event : [event];
+      for (const e of events) {
+        watcher.on(e, callback);
+      }
       log("start watching", chalk.blue(paths), "on", chalk.blue(event));
     }
 

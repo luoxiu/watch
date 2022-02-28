@@ -5,10 +5,12 @@ const config = {
       options: {
         ignored: "**/node_modules/**",
       },
-      handlers: [
+      callbacks: [
         {
-          event: "change",
-          callback: console.log
+          event: ["change"],
+          callback: async (...args) => {
+            console.log("change", ...args);
+          } 
         },
       ]
     }
