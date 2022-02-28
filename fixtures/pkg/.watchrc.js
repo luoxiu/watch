@@ -7,12 +7,12 @@ const config = {
       },
       handlers: [
         {
-          eventName: "change",
+          event: "change",
           callback: console.log
         },
       ]
     }
   ]
-}
+};
 
-export default config
+export default config;
