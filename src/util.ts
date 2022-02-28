@@ -25,7 +25,11 @@ export async function readPKG(): Promise<any> {
 export function mute<I = void>(fn: (i: I) => Promise<any>): (i: I) => Promise<void> {
   return function (i: I): Promise<void> {
     return fn(i)
-      .then(noop)
-      .catch(e => console.error(chalk.red(e)));
+      .catch(e => e);
   };
+}
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export function log(...args: any[]): void {
+  console.log(...args);
 }

@@ -8,5 +8,9 @@ export default {
   },
   moduleNameMapper: {
     "^(\\.{1,2}/.*)\\.js$": "$1",
+    // https://github.com/facebook/jest/issues/12270
+    chalk: "chalk/source/index.js",
+    "#ansi-styles": "chalk/source/vendor/ansi-styles/index.js",
+    "#supports-color": "chalk/source/vendor/supports-color/index.js"
   },
 };

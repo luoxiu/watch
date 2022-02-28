@@ -1,4 +1,7 @@
-import {mute, readPKG} from "./util";
+import {readPKG, mute} from "./util";
+import {jest} from "@jest/globals";
+
+jest.useFakeTimers();
 
 test("readPKG", async () => {
   const pkg = await readPKG();
@@ -6,11 +9,9 @@ test("readPKG", async () => {
 });
 
 test("mute", async () => {
-
-  const e = async () => {
-    throw "e";
+  const e = async (msg: string) => {
+    throw msg;
   };
-
-  const muteE = mute(e);
-  await muteE();
+  const msg = await mute(e)("msg");
+  expect(msg).toEqual("msg");
 });
