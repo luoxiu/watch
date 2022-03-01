@@ -16,7 +16,7 @@ export type Config = {
     paths: string | string[];
     options: chokidar.WatchOptions;
     callbacks: {
-      event: string | string[];
+      events: string | string[];
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       callback: (...args: any[]) => void | Promise<void>;
     }[];
@@ -25,7 +25,7 @@ export type Config = {
 
 export async function getConfig(path: string = configPath): Promise<Config> {
   if (!fs.existsSync(path)) {
-    throw "config: not found";
+    throw "config: .watchrc.js not found";
   }
 
   const module = await import(path);
@@ -41,7 +41,7 @@ export async function getConfig(path: string = configPath): Promise<Config> {
   if (is.object(config))
     return config as Config;
 
-  throw "config: bad format";
+  throw "config: .watchrc.js bad format";
 }
 
 export async function watch(): Promise<FSWatcher[]> { 
@@ -52,12 +52,12 @@ export async function watch(): Promise<FSWatcher[]> {
   return watchers.map(({ paths, options, callbacks }) => {
     const watcher = chokidar.watch(paths, options);
 
-    for (const { event, callback } of callbacks) {
-      const events = is.array(event) ? event : [event];
-      for (const e of events) {
+    for (const { events, callback } of callbacks) {
+      const es = is.array(events) ? events : [events];
+      for (const e of es) {
         watcher.on(e, callback);
       }
-      log("start watching", chalk.blue(paths), "on", chalk.blue(event));
+      log("start watching", chalk.blue(paths), "on", chalk.blue(es));
     }
 
     return watcher;
@@ -78,11 +78,11 @@ export async function watchAndRewatchOnConfigChange() {
   chokidar.watch(configPath)
     .on("change", () => {
       
-      log("config changed, rewatching...");
+      log(chalk.green("config changed, rewatching..."));
 
       rewatch()
         .then(() => {
-          log("done");
+          log(chalk.green("done"));
         });
     });
 }

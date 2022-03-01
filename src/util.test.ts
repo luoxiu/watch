@@ -5,7 +5,7 @@ jest.useFakeTimers();
 
 test("readPKG", async () => {
   const pkg = await readPKG();
-  expect(pkg.name).toEqual("watch");
+  expect(pkg.name).toEqual("@luoxiu/watch");
 });
 
 test("mute", async () => {
