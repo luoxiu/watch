@@ -8,7 +8,7 @@ import chalk from "chalk";
 import { mute, log } from "./util.js";
 import is from "@sindresorhus/is";
 
-const configName = ".watchrc.js";
+const configName = "watch.config.js";
 const configPath = path.join(process.cwd(), configName);
 
 export type Config = {
@@ -25,7 +25,7 @@ export type Config = {
 
 export async function getConfig(path: string = configPath): Promise<Config> {
   if (!fs.existsSync(path)) {
-    throw "config: .watchrc.js not found";
+    throw `config: ${configName} not found`;
   }
 
   const module = await import(path);
@@ -41,7 +41,7 @@ export async function getConfig(path: string = configPath): Promise<Config> {
   if (is.object(config))
     return config as Config;
 
-  throw "config: .watchrc.js bad format";
+  throw `config: ${configName} bad format`;
 }
 
 export async function watch(): Promise<FSWatcher[]> { 
