@@ -62,20 +62,25 @@ module.exports = async () => {
 }
 ```
 
-`watch` uses [chokidar](https://github.com/paulmillr/chokidar) to watch file changes, so you can watch `add | change | unlink(remove)` events on `file | dir | glob`. 
+`watch` uses [chokidar](https://github.com/paulmillr/chokidar) to watch file changes, so you can watch `add | change | unlink(remove) | more` events on `file | dir | glob | more`. 
 
 Please refer to [chokidar#api](https://github.com/paulmillr/chokidar#api) to learn more about `paths`, `options`, `events` and `callbacks`.
 
 `watch` uses [zx](https://github.com/google/zx) to execute callbacks, so you can write expressive scripts like:
 
 ```
-cd('/a-path')
-await $`pwd` // outputs /tmp
+{
+    events: ["changes"],
+    callback: async (path) => {
+        const resp = await fetch('https://wttr.in')
+        const text = await fs.readFile(path)
 
-const resp = await fetch('https://wttr.in')
-const text = await fs.readFile('./package.json')
+        console.log(chalk.blue('Hello world!'))
 
-console.log(chalk.blue('Hello world!'))
+        cd('/a-path')
+        await $`pwd` // outputs /tmp
+    }
+}
 ```
 
 Please refer to [zx#documentation](https://github.com/google/zx#documentation) to learn more about `zx`.
