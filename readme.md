@@ -2,6 +2,9 @@
 
 Do something exciting when file changes!
 
+![main](https://github.com/luoxiu/watch/actions/workflows/main.yml/badge.svg)
+
+
 ## Install
 
 ```
@@ -14,26 +17,34 @@ $ pnpm add -g @luoxiu/watch
 
 ## Usage
 
-In your working directory, execute:
+In your working directory, create a file named `watch.config.js`:
+
+```
+$ cd your-working-directory && touch watch.config.js
+```
+
+and execute:
 
 ```
 $ watch
 ```
 
-It will find `watch.config.js` in the current directory, and watch as it configures.
+## `watch.config.js`
 
-For example:
+The following example will format your swift code as it changes:
 
 ```js
+// watch.config.js
 module.exports = {
-    watchers: [
+    watchers: [ 
         {
-        
             paths: ["Source/**/*.swift", "Tests/**/*.swift"],
-            options: {},
+            options: {
+                ignored: ["*.generated.swift"],
+            },
             callbacks: [
                 {
-                    events: ["add", "change"],
+                    events: ["change"],
                     callback: async (path) => {
                         await $`swiftformat ${path}`
                     }
@@ -42,4 +53,29 @@ module.exports = {
         }
     ]
 }
+
+// or
+module.exports = async () => {
+    return {
+        // ...
+    }
+}
 ```
+
+`watch` uses [chokidar](https://github.com/paulmillr/chokidar) to watch file changes, so you can watch `add | change | unlink(remove)` events on `file | dir | glob`. 
+
+Please refer to [chokidar#api](https://github.com/paulmillr/chokidar#api) to learn more about `paths`, `options`, `events` and `callbacks`.
+
+`watch` uses [zx](https://github.com/google/zx) to execute callbacks, so you can write expressive scripts like:
+
+```
+cd('/a-path')
+await $`pwd` // outputs /tmp
+
+const resp = await fetch('https://wttr.in')
+const text = await fs.readFile('./package.json')
+
+console.log(chalk.blue('Hello world!'))
+```
+
+Please refer to [zx#documentation](https://github.com/google/zx#documentation) to learn more about `zx`.
