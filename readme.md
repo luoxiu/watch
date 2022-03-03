@@ -2,8 +2,9 @@
 
 Do something exciting when file changes!
 
-![main](https://github.com/luoxiu/watch/actions/workflows/main.yml/badge.svg)
-
+![ci](https://img.shields.io/github/workflow/status/luoxiu/watch/CI)
+![npm](https://img.shields.io/npm/v/@luoxiu/watch)
+![license](https://img.shields.io/github/license/luoxiu/watch)
 
 ## Install
 
