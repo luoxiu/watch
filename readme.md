@@ -63,7 +63,7 @@ module.exports = async () => {
 }
 ```
 
-`watch` uses [chokidar](https://github.com/paulmillr/chokidar) to watch file changes, so you can watch `add | change | unlink(remove) | more` events on `file | dir | glob | more`. 
+`watch` uses [chokidar](https://github.com/paulmillr/chokidar) to watch file changes, so you can watch `add | change | unlink(remove) | etc` events on `file | dir | glob | etc`. 
 
 Please refer to [chokidar#api](https://github.com/paulmillr/chokidar#api) to learn more about `paths`, `options`, `events` and `callbacks`.
 
