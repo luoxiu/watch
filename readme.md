@@ -1,6 +1,6 @@
 # Watch
 
-Do something exciting when file changes!
+Do something exciting on file changes!
 
 ![ci](https://img.shields.io/github/workflow/status/luoxiu/watch/CI)
 ![npm](https://img.shields.io/npm/v/@luoxiu/watch)
@@ -21,7 +21,7 @@ $ pnpm add -g @luoxiu/watch
 In your working directory, create a file named `watch.config.js`:
 
 ```
-$ cd your-working-directory && touch watch.config.js
+$ cd ./wd && touch watch.config.js
 ```
 
 and execute:
