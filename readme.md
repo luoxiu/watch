@@ -62,9 +62,13 @@ module.exports = {
 }
 ```
 
+### chokidar
+
 `watch` uses [chokidar](https://github.com/paulmillr/chokidar) to watch file changes, so you can watch `add | change | unlink(remove) | etc` events on `file | dir | glob | etc`. 
 
 Please refer to [chokidar#api](https://github.com/paulmillr/chokidar#api) to learn more about `paths`, `options`, `events` and `callbacks`.
+
+### zx
 
 `watch` uses [zx](https://github.com/google/zx) to execute callbacks, so you can write expressive scripts like:
 
@@ -84,3 +88,9 @@ Please refer to [chokidar#api](https://github.com/paulmillr/chokidar#api) to lea
 ```
 
 Please refer to [zx#documentation](https://github.com/google/zx#documentation) to learn more about `zx`.
+
+### lodash
+
+`watch` also includes [lodash](https://lodash.com), so you can use your favorite lodash functions like `_.cloneDeep`, `_.uniq`, `_.debounce` to write your ambitious configs.
+
+Please refer to [lodash#Docs](https://lodash.com/docs) to learn more about `lodash`.
