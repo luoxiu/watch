@@ -5,7 +5,7 @@ import { readPKG } from "./util.js";
 import { watchAndRewatchOnConfigChange } from "./watch.js";
 import chalk from "chalk";
 import "zx/globals";
-import * as _ from "lodash";
+import _ from "lodash";
 
 Object.assign(global, { _ });
 
