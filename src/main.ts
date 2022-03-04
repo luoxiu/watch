@@ -7,7 +7,7 @@ import chalk from "chalk";
 import "zx/globals";
 import * as _ from "lodash";
 
-global._ = _;
+Object.assign(global, { _ });
 
 const program = new Command();
 
