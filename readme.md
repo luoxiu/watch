@@ -36,30 +36,29 @@ The following example will format your swift code as it changes:
 
 ```js
 // watch.config.js
-module.exports = {
-    watchers: [ 
-        {
-            paths: ["Source/**/*.swift", "Tests/**/*.swift"],
-            options: {
-                ignored: ["*.generated.swift"],
-            },
-            callbacks: [
-                {
-                    events: ["change"],
-                    callback: async (path) => {
-                        await $`swiftformat ${path}`
-                    }
-                }
-            ]
-        }
-    ]
+async function format(path) {
+    await $`swiftformat ${path}`
+    await $`open ${path} -a Xcode`
 }
 
-// or
-module.exports = async () => {
-    return {
-        // ...
+module.exports = {
+  watchers: [
+    {
+      paths: ["Sources/**/*.swift", "Tests/**/*.swift"],
+      options: {
+        usePolling: true,
+        interval: 500
+      },
+      callbacks: [
+        {
+          events: ["change"],
+          callback: async (path) => {
+              _.debounce(format, 500)(path)
+          }
+        }
+      ]
     }
+  ]
 }
 ```
 
