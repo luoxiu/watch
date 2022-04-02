@@ -37,8 +37,7 @@ The following example will format your swift code as it changes:
 ```js
 // watch.config.js
 async function format(path) {
-    await $`swiftformat ${path}`
-    await $`open ${path} -a Xcode`
+  await $`sleep 1 && swiftformat ${path}`
 }
 
 module.exports = {
@@ -53,7 +52,7 @@ module.exports = {
         {
           events: ["change"],
           callback: async (path) => {
-              _.debounce(format, 500)(path)
+            format(path)
           }
         }
       ]
