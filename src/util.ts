@@ -12,12 +12,12 @@ export async function readJSON(path: string): Promise<any> {
   return JSON.parse(text);
 }
 
-export const file = fileURLToPath(import.meta.url);
-export const dir = dirname(file);
+export const thisFile = fileURLToPath(import.meta.url);
+export const thisDir = dirname(thisFile);
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export async function readPKG(): Promise<any> {
-  const path = join(dir, "../package.json");
+  const path = join(thisDir, "../package.json");
   return await readJSON(path);
 }
 
